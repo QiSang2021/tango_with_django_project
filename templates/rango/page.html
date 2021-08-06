@@ -1,0 +1,104 @@
+{% extends 'rango/base.html' %}
+{% load static %}
+
+{% block title_block %}
+        {% if page %}
+            {{ page.clothname }}
+        {% else %}
+            Unknown Page
+        {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    {% if page %}
+        <div class="container">
+            <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+            <ul>
+            <li><a href="/rango/category/{{ page.category.slug }}">{{ page.category }}</a></li>
+            <li><a href="{{ page.url }}">{{ page.clothname }}</a></li>
+            <li>{{ page.price }}</li>
+            <li>{{ page.description }}</li>
+            <li>{{ page.views }}</li>
+            <img src="{% get_static_prefix %}images/{{ page.category}}/{{ page.clothname}}.png" alt="Picture of cloth" />
+            </ul>
+            </div>
+        </div>
+
+        <div class="jumbotron p-3">
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1">
+                <h3 class="submit_comment_title">Area for submit comment</h3>
+                <div>
+                    {% if user.is_authenticated %}
+                    <form id="comment_form" method="post" action="/rango/page/{{ page.slug }}/submit_comment/" style="overflow:hidden">
+                    <label for="comment_area">{{user.username }}, welcome to share your idea and comment here!</label>
+                    {% csrf_token %}
+                    {% for field in comment_form %}
+                        {{ field }}
+                    {% endfor %}
+                    <span id="comment_error" class="text-danger pull-left"></span>
+                    <input type="submit" name="comment" class="btn btn-primary pull-right" />
+                    </form>
+
+                    {% else %}
+                    {% csrf_token %}
+                    You are no logged in, you can comment after logging in.
+                    <a class="btn btn-danger" href="{% url 'auth_login' %}">Log in</a>
+                    <span>or</span>
+                    <a class="btn btn-primary" href="{% url 'registration_register' %}">Sign up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+            <br/>
+        <div class="jumbotron p-3">
+            <div class="container">
+                <h3>Area for show comment </h3>
+                <div id="comment_show">
+                    {% for comment in comments %}
+                        <div>
+                            {{ comment.author.username }}
+                            {{ comment.comtime|date:"Y-m-d H:i:s" }}
+                            {{ comment.text|safe }}
+                        </div>
+                    {% empty %}
+                        No comment now.
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <strong>No clothes currently in this page.</strong>
+    {% endif %}
+
+{% endblock %}
+
+{% block script_extends %}
+    <script type="text/javascript">
+        $("#comment_form").submit(function(){
+            //asynchronous submission
+            $.ajax({
+                url: "/rango/page/{{ page.slug }}/submit_comment/",
+                type: 'POST',
+                data: $(this).serialize(),
+                cache: false,
+                success: function(data){
+                    console.log(data);
+                    if(data['status']=="SUCCESS"){
+                        var comment_html = '<div>' + data['author'] + '(' + data['comtime'] + '): ' + data['text'] + '</div>';
+                        $("#comment_show").prepend(comment_html);
+                        
+                    }else{
+                        $("#comment_error").text(data['message']);
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr);
+                }
+            });
+            return false;
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rango_template_tags %}
+
+<html>
+    <head>
+        <title>
+            Wardrobe -
+            {% block title_block %}
+                
+            {% endblock %}
+        </title>
+
+    <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
+    </head>
+
+    <body>
+         <header>
+            <nav class="navbar navbar-expand-md navbar-secondary fixed-top bg-light p-0">
+            <a class="navbar-brand p-2" href="{% url 'rango:index' %}">Wardrobe</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse"
+                    aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item "><a class="nav-link" href="{% url 'rango:index' %}">Home</a></li>
+                <li class="nav-item "><a class="nav-link" href="{% url 'rango:article' %}">Article</a></li>
+                <li class="nav-item "><a class="nav-link" href="{% url 'rango:item' %}">Hottest Item</a></li>
+                <li class="nav-item "><a class="nav-link" href="{% url 'rango:about' %}">About</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item "><a class="nav-link" href="{% url 'rango:profile' %}">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next={% url 'rango:index' %}">Logout</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'auth_login' %}">Log in</a></li>
+                <li class="nav-item "><a class="nav-link" href="{% url 'registration_register' %}">Sign up</a></li>
+                 {% endif %}
+                </ul>
+            </div>
+
+         </header>
+
+          <div class="container-fluid">
+              <div class="row">
+                  <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                      <div class="sidebar-sticky">
+                          {% block sidebar_block %}
+                          {% if categories %}
+						  <ul>
+                              <h2>Brands:</h2>
+						  {% for category in categories %}
+						<li><a href="/rango/category/{{ category.slug }}/" style="color: #B8860B;text-decoration: none">{{ category.brandname }}</a></li>
+						  {% endfor %}
+						  </ul>
+						 {% else %}
+						<h1>Wardrobe</h1>
+                        <h3> For Fashion</h3>
+                        <h3>For Beauty</h3>
+                        <h3>For Life</h3>
+						{% endif %}
+                       {% endblock %}
+                      </div>
+                  </nav>
+
+                  <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
+                    {% block body_block %}{% endblock %}
+                    </main>
+              </div>
+          </div>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+        <script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+        <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>
+
+        <script src="{% static "js/jquery-3.3.1.min.js" %}" crossorigin="anonymous"></script>
+        {% block script_extends %}{% endblock %}
+    </body>
+</html>

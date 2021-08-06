@@ -1,0 +1,30 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Add Clothes
+{% endblock %}
+
+
+
+{% block body_block %}
+<br />
+<br />
+
+<div class="container">
+    <h1>Upload your Article</h1>
+    <form id="add_article_form" method="post" action="/rango/add_article/">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+        <br/>
+            {{ field.errors }}
+            {{ field.help_text }}<br/>
+            {{ field }}       <br/>
+        {% endfor %}
+        <button class="btn btn-primary" type="submit" name="submit">Upload now</button>
+    </form>
+</div> 
+{% endblock %}

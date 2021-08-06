@@ -1,0 +1,22 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+
+{% block title_block %}
+    Articles
+{% endblock %}
+
+{% block body_block %}
+<br />   
+<br />    
+
+{% if article %}
+<div class="container">
+    <h1>{{ title }}</h1>
+    <pre>Uploader:{{ uploader }}, Author:{{ author }}</pre>
+    <h3>{{ content }}</h3>
+</div>
+    
+{% endif %}
+
+{% endblock %}

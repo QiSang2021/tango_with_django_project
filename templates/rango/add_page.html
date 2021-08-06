@@ -1,0 +1,32 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Add Clothes
+{% endblock %}
+
+
+{% block body_block %}
+<br />
+<br /> 
+
+<div class="jumbotron p-3">
+    <div class="container">
+    <h1>Add Clothes to {{ category.slug }}</h1>
+    <form id="add_page_form" method="post" action="/rango/category/{{ category.slug }}/add_page/">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            {{ field.errors }}<br/>
+            {{ field.help_text }} <br/>
+            {{ field }}
+            <br/>
+        {% endfor %}
+        <br/>
+        <input type="submit" name="submit" value="Add Page" />
+    </form>
+    </div>
+</div>
+{% endblock %}

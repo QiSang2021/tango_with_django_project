@@ -1,0 +1,24 @@
+{% extends 'rango/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Item
+{% endblock %}
+
+{% block body_block %}
+<div>
+	<h2 >Top ten hottest items</h2>
+		{% if pages %}
+    	<ol>
+    		{% for page in pages %}
+        	<li><a href="/rango/page/{{ page.slug }}/">{{ page.clothname }}</a></li>
+			<img src="{% get_static_prefix %}images/{{ page.category}}/{{ page.clothname}}.png" alt="Picture of clothes" />
+    		{% endfor %}
+    	</ol>
+		{% else %}
+    		<strong>There are no clothes present.</strong>
+		{% endif %}
+</div>
+
+{% endblock %}
+

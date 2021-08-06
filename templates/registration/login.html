@@ -1,0 +1,20 @@
+{% extends 'rango/base.html' %}
+
+{% block title_block %}
+Welcome! Login for Wardrobe
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+    <div class="jumbotron bg-info text-white" >
+    <h1>Login</h1>
+    <form method="post" action=".">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Log In" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+    <p>Not registered yet?<a href="{% url 'registration_register' %}">Register here!</a></p>
+    </div>
+</div>
+{% endblock %}

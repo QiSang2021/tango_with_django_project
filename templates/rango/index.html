@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Homepage
+{% endblock %}
+
+<html>
+<body>
+<header>
+
+<div class="container-fluid">
+	<div class="row">
+		<main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
+			{% block body_block %}
+			<a href="/rango/category/chanel/"><img src="{% static 'images/index/1.png' %}" /></a>
+			<a href="/rango/category/miumiu/"><img src="{% static 'images/index/2.png' %}" /></a>
+			<a href="/rango/category/gucci/"><img src="{% static 'images/index/3.png' %}" /></a>
+			<a href="/rango/category/prada/"><img src="{% static 'images/index/4.png' %}" /></a>
+			{% endblock %}
+		</main>
+	</div>
+</div>
+
+</header>
+</body>
+
+</html>

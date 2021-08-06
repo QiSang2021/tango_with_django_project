@@ -1,0 +1,32 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    About Wardrobe
+{% endblock %}
+
+{% block body_block %}
+<div class="jumbotron-fluid  text-center " >
+    <h1 class="display-2"> Who are we ? </h1>
+    <p class="lead">
+    <h5>Here users can see the popular clothing of many famous brands (such as Gucci, Prada, etc.)</h5>
+    <h5>Here users can make better clothing choices based on others' reviews</h5>
+    <h5>Here you can understand the hot trend of clothing items</h5>
+    <h5>Here we provide a channel for communication and sharing</h5>
+    <h5>Here we help the user to navigate to the purchase page</h5>
+    <h5>Here we provide details of the clothing</h5>
+    </p>
+    <img src="{% static 'images/about/1.jpg' %}" alt="Picture of Chanel" />
+    <img src="{% static 'images/about/2.jpg' %}" alt="Picture of Versace" />
+    <img src="{% static 'images/about/3.jpg' %}" alt="Picture of LV" />
+    <img src="{% static 'images/about/4.jpg' %}" alt="Picture of Gucci" />
+    <img src="{% static 'images/about/5.jpg' %}" alt="Picture of Prada" />
+
+</div>
+
+
+
+
+
+
+{% endblock %}
